@@ -9,32 +9,65 @@ require 'includes/form_handlers/login_handler.php';
 <head>
 	<title>Welcome to Blahbebs</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/register_style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="assets/js/register.js"></script>
+	
 </head>
 <body>
-	<div class="wrapper">
 
-		<div class="login_box">
+	<?php 
+
+	if (isset($_POST['register_button'])) {
+		echo '
+
+		<script>
+			$(document).ready(function(){
+				$("#first").hide();
+				$("#second").show();
+			})
+		</script>
+
+		'	;
+	}
+
+	?>
+<div class="wrapper">
 
 
+	<div class="login_box">
+		<div class="login_header">
+			<h1>Blahbebs</h1>
+			Login or sign up below
+		
+		</div>
 
-
+		<div id="first" class="second">
 			<form action="register.php" method="POST">
 				<input type="email" name="log_email" placeholder="Email Address" 
 
 				value= "<?php  if(isset($_SESSION['log_email'])){
-				echo($_SESSION['log_email']);}?>" required>
+									echo($_SESSION['log_email']);}
+
+						?>" required>
 
 				<br>
 				<input type="password" name="log_password" placeholder="Password">
 				<br>
+				<?php if(in_array("Email or password was incorrect<br>", $error_array)) echo "email or password incorrect";  ?>
 				<input type="submit" name="login_button" value="Login">
 				<br>
+				<a href="#" id="signup" class="signup">Need an Account? SignUp</a>
 
 
 				<?php
 					if(in_array('Email or password was incorrect', $error_array)) echo("Email or password was incorrect");
 				?>
 			</form>
+	    </div>
+
+
+	<div id="second" class="second">
+
 		<form action="register.php" method="POST">
 			<input type="text" name="reg_fname" placeholder="First Name" value= "<?php  if(isset($_SESSION['reg_fname'])){
 				echo($_SESSION['reg_fname']);}
@@ -82,12 +115,14 @@ require 'includes/form_handlers/login_handler.php';
 			<input type="submit" name="register_button" value="Register">
 			<br>
 			<?php
-			if(in_array("<span > You are all set !! Go ahead and login !</span><br>",$error_array )) echo "<span style='color: #14C800' > You are all set !! Go ahead and login !</span><br>";
+			if(in_array("<span style='color:#14CB00' > You are all set !! Go ahead and login !</span><br>",$error_array )) echo "<span style='color: #14C800' > You are all set !! Go ahead and login !</span><br>";
 			?>
 
-		</form>
+				<a href="#" id="signin" class="signin">Already have an account? Sign In Here</a>
 
-		</div>
+		</form>
+	</div>
+	</div>
 </div>
 </body>
 </html>
